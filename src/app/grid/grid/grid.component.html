@@ -1,0 +1,32 @@
+<div
+  #root
+  class="grid"
+  [style.grid-template-columns]="columns | safeGridTemplate"
+  [style.grid-template-rows]="rows | safeGridTemplate"
+  (mousemove)="onMouseMove($event)"
+>
+  <div class="line__row"
+    *ngFor="let r of rows; let y = index"
+    [style.grid-area]="
+      { cellX: 0, cellY: y, spanX: columns.length, spanY: 1 } | safeGridArea
+    "
+  ></div>
+  <div class="line__column"
+    *ngFor="let c of columns; let i = index; let x = index"
+    [style.grid-area]="
+      { cellX: x, cellY: 0, spanX: 1, spanY: rows.length } | safeGridArea
+    "
+  ></div>
+
+  <div class="element" #element
+    style="background: red"
+    [style.grid-area]="pos | safeGridArea"
+    [style.cursor]="cursor"
+    (mousedown)="onMouseDown($event)"
+  >
+    <div class="corner__left-top"></div>
+    <div class="corner__right-top"></div>
+    <div class="corner__left-bottom"></div>
+    <div class="corner__right-bottom"></div>
+  </div>
+</div>
