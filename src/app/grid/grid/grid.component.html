@@ -3,7 +3,6 @@
   class="grid"
   [style.grid-template-columns]="columns | safeGridTemplate"
   [style.grid-template-rows]="rows | safeGridTemplate"
-  (mousemove)="onMouseMove($event)"
 >
   <div class="line__row"
     *ngFor="let r of rows; let y = index"
@@ -18,15 +17,21 @@
     "
   ></div>
 
-  <div class="element" #element
-    style="background: red"
-    [style.grid-area]="pos | safeGridArea"
+  <div *ngFor="let element of gridElements"
+    class="element"
+    [class]="element.class"
+    [style.grid-area]="element.position | safeGridArea"
     [style.cursor]="cursor"
-    (mousedown)="onMouseDown($event)"
+    (mousedown)="onMouseDown($event, element)"
+    (mousemove)="onMouseMove($event, element)"
   >
+
+    <img *ngIf="element.img" class="element__image" [src]="element.img | safeurl" />
+
     <div class="corner__left-top"></div>
     <div class="corner__right-top"></div>
     <div class="corner__left-bottom"></div>
     <div class="corner__right-bottom"></div>
   </div>
+
 </div>
